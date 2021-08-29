@@ -133,23 +133,8 @@
   },
   "function": {
     "prefix": "fn",
-    "body": ["${2:void} ${1:func}(${4:void})", "{", "\t$3", "}"],
+    "body": ["${1:void} ${2:fn}(${3:void}) {", "\t$0", "}"],
     "description": "snippet for new function"
-  },
-  "int function": {
-    "prefix": "intfn",
-    "body": ["int $1 ()", "{", "\tint $2 = $3;$4", "\treturn $2;", "}"],
-    "description": "snippet for function that returns int"
-  },
-  "float function": {
-    "prefix": "flfn",
-    "body": ["float $1 ()", "{", "\tfloat $2 = $3;$4", "\treturn $2;", "}"],
-    "description": "snippet for function that returns float"
-  },
-  "double function": {
-    "prefix": "dbfn",
-    "body": ["double $1 ()", "{", "\tdouble $2 = $3;$4", "\treturn $2;", "}"],
-    "description": "snippet for function that returns double"
   },
   "printf": {
     "prefix": "pr",
