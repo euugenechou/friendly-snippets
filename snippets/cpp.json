@@ -1,61 +1,185 @@
 {
+  "default template": {
+    "prefix": "main",
+    "body": [
+      "#include <stdio.h>",
+      "",
+      "int main(int argc, char **argv) {",
+      "\t$0",
+      "\treturn 0;",
+      "}"
+    ],
+    "description": "standard template for a C program"
+  },
+  "default template (void)": {
+    "prefix": "mainn",
+    "body": [
+      "#include <stdio.h>",
+      "",
+      "int main(void) {",
+      "\t$0",
+      "\treturn 0;",
+      "}"
+    ],
+    "description": "standard template for a C program (void)"
+  },
   "for": {
     "prefix": "for",
     "body": [
-      "for (${1:size_t} ${2:i} = ${3:0}; $2 < ${4:length}; $2++) {",
+      "for (${1:size_t} ${2:i} = ${3:0}; $2 < ${4:n}; $2 += 1) {",
       "\t$0",
       "}"
     ],
-    "description": "Code snippet for 'for' loop"
+    "description": "snippet for for loop"
   },
   "forr": {
     "prefix": "forr",
     "body": [
-      "for (${1:size_t} ${2:i} = ${3:length} - 1; $2 >= ${4:0}; $2--) {",
+      "for (${1:size_t} ${2:i} = ${3:n} - 1; $2 >= ${4:0}; $2 -= 1) {",
       "\t$0",
       "}"
     ],
-    "description": "Code snippet for reverse 'for' loop"
-  },
-  "do": {
-    "prefix": "do",
-    "body": ["do", "{", "\t$1", "} while($2);"],
-    "description": "Code snippet for do...while loop"
+    "description": "snippet for reversed for loop"
   },
   "while": {
-    "prefix": "while",
-    "body": ["while ($1)", "{", "\t$2", "}"],
-    "description": ""
-  },
-  "foreach": {
-    "prefix": "foreach",
-    "body": ["for(${1:auto} ${2:var} : ${3:collection_to_loop})", "{", "\t$0", "}"],
-    "description": "Code snippet for range-based for loop (c++11) statement"
+    "prefix": "wh",
+    "body": ["while ($1) {", "\t$0", "}"],
+    "description": "snippet for while loop"
   },
   "if": {
     "prefix": "if",
-    "body": ["if ($1)", "{", "\t$0", "}"],
-    "description": "Code snippet for if statement"
+    "body": ["if ($1) {", "\t$0", "}"],
+    "description": "snippet for if statement"
   },
   "else": {
-    "prefix": "else",
-    "body": ["else", "{", "\t$0", "}"],
-    "description": "Code snippet for else statement"
+    "prefix": "el",
+    "body": ["else {", "\t$0", "}"],
+    "description": "snippet for else statement"
   },
   "else if": {
-    "prefix": "else if",
-    "body": ["else if ($1)", "{", "\t$0", "}"],
-    "description": "Code snippet for else-if statement"
+    "prefix": "elif",
+    "body": ["else if ($1) {", "\t$0", "}"],
+    "description": "snippet for else-if statement"
   },
   "enum": {
     "prefix": "enum",
     "body": ["enum ${1:MyEnum} {", "\t$0", "};"],
-    "description": "Code snippet for enum"
+    "description": "enum"
   },
-  "enum class": {
-    "prefix": "enum class",
-    "body": ["enum class ${1:MyClass} {$0};"],
-    "description": "Code snippet for enum class (c++11)"
+  "#ifdef": {
+    "prefix": "ifd",
+    "body": ["#ifdef ${1:DEBUG}", "$0", "#endif /* $1 */"],
+    "description": "snippet for #ifdef"
+  },
+  "#ifndef": {
+    "prefix": "ifnd",
+    "body": ["#ifndef ${1:DEBUG}", "$0", "#endif /* !$1 */"],
+    "description": "snippet for #ifndef"
+  },
+  "struct": {
+    "prefix": "st",
+    "body": ["struct ${1:Struct} {", "\t$0", "};"],
+    "description": "snippet for struct"
+  },
+  "typedef struct": {
+    "prefix": "stt",
+    "body": ["typedef struct {", "\t$0", "} ${1:Struct};"],
+    "description": "snippet for typedef'd struct"
+  },
+  "switch": {
+    "prefix": "sw",
+    "body": ["switch (${1:x}) {", "case ${2:y}:", "\t$0", "\tbreak;", "}"],
+    "description": "snippet for switch statement"
+  },
+  "case": {
+    "prefix": "ca",
+    "body": ["case $1:", "\t$0", "\tbreak;"],
+    "description": "snippet for case branch"
+  },
+  "union": {
+    "prefix": "un",
+    "body": ["union ${1:Union} {", "\t$0", "};"],
+    "description": "snippet for union"
+  },
+  "include system header": {
+    "prefix": "inc",
+    "body": ["#include <$1.h>"],
+    "description": "snippet for #include < >"
+  },
+  "include header": {
+    "prefix": "inch",
+    "body": ["#include \"$1.h\"$0"],
+    "description": "snippet for #include \" \""
+  },
+  "header guard": {
+    "prefix": "guard",
+    "body": [
+      "#ifndef ${1:token}",
+      "#define ${1:token}",
+      "\n$0\n",
+      "#endif"
+    ],
+    "description": "snippet for header guard"
+  },
+  "def": {
+    "prefix": "df",
+    "body": ["#define $1"],
+    "description": "snippet for #define"
+  },
+  "do...while loop": {
+    "prefix": "do",
+    "body": ["do {", "\t$1", "} while($2);"],
+    "description": "snippet for do-while loop"
+  },
+  "function": {
+    "prefix": "fn",
+    "body": ["${2:void} ${1:func}(${4:void})", "{", "\t$3", "}"],
+    "description": "snippet for new function"
+  },
+  "int function": {
+    "prefix": "intfn",
+    "body": ["int $1 ()", "{", "\tint $2 = $3;$4", "\treturn $2;", "}"],
+    "description": "snippet for function that returns int"
+  },
+  "float function": {
+    "prefix": "flfn",
+    "body": ["float $1 ()", "{", "\tfloat $2 = $3;$4", "\treturn $2;", "}"],
+    "description": "snippet for function that returns float"
+  },
+  "double function": {
+    "prefix": "dbfn",
+    "body": ["double $1 ()", "{", "\tdouble $2 = $3;$4", "\treturn $2;", "}"],
+    "description": "snippet for function that returns double"
+  },
+  "printf": {
+    "prefix": "pr",
+    "body": ["printf(\"$1\\n\"$0);"],
+    "description": "snippet for printf()"
+  },
+  "sprintf": {
+    "prefix": "spr",
+    "body": ["sprintf($1, \"$2\\n\"$0);"],
+    "description": "snippet for sprintf()"
+  },
+  "fprintf": {
+    "prefix": "fpr",
+    "body": ["fprintf(${1:stderr}, \"$2\\n\"$0);"],
+    "description": "snippet for fprintf()"
+  },
+  "scanf": {
+    "prefix": "scf",
+    "body": ["scanf(\"$1\"$0);"],
+    "description": "snippet for scanf()"
+  },
+  "sscanf": {
+    "prefix": "sscf",
+    "body": ["sscanf($1, \"$2\"$0);"],
+    "description": "snippet for sscanf()"
+  },
+  "fscanf": {
+    "prefix": "fscf",
+    "body": ["fscanf($1, \"$2\"$0);"],
+    "description": "snippet for fscan()"
   },
   "class": {
     "prefix": "class",
@@ -112,31 +236,6 @@
     "prefix": "namespace",
     "body": ["namespace ${1:MyNamespace}", "{", "\t$0", "}"]
   },
-  "#ifdef": {
-    "prefix": "#ifdef",
-    "body": ["#ifdef ${1:DEBUG}", "$0", "#endif // ${DEBUG}"],
-    "description": "Code snippet for #ifdef"
-  },
-  "#ifndef": {
-    "prefix": "#ifndef",
-    "body": ["#ifndef ${1:DEBUG}", "$0", "#endif // !$1"],
-    "description": "Code snippet for #ifndef"
-  },
-  "#if": {
-    "prefix": "#if",
-    "body": ["#if ${1:0}", "$0", "#endif // $1"],
-    "description": "Code snippet for #if"
-  },
-  "struct": {
-    "prefix": "struct",
-    "body": ["struct ${1:MyStruct}", "{", "\t$0", "};"],
-    "description": "Code snippet for struct"
-  },
-  "switch": {
-    "prefix": "switch",
-    "body": ["switch (${1:switch_on}) {", "\tdefault:", "\t\t$0", "\t\tbreak;", "}"],
-    "description": "Code snippet for switch statement"
-  },
   "try": {
     "prefix": "try",
     "body": [
@@ -151,11 +250,6 @@
     ],
     "description": "Code snippet for try catch"
   },
-  "union": {
-    "prefix": "union",
-    "body": ["union ${1:MyUnion}", "{", "\t$0", "};"],
-    "description": "Code snippet for union"
-  },
   "cout": {
     "prefix": "cout",
     "body": ["std::cout << \"${1:message}\" << std::endl;"],
@@ -165,61 +259,5 @@
     "prefix": "cin",
     "body": ["std::cin >> $1;"],
     "description": "Code snippet for std::cin, provided the header is set"
-  },
-  "printf": {
-    "prefix": "printf",
-    "body": ["printf(\"$1\\n\"$0);"],
-    "description": "Generic printf() snippet"
-  },
-  "sprintf": {
-    "prefix": "sprintf",
-    "body": ["sprintf($1, \"$2\\n\"$0);"],
-    "description": "Generic sprintf() snippet"
-  },
-  "fprintf": {
-    "prefix": "fprintf",
-    "body": ["fprintf(${1:stderr}, \"$2\\n\"$0);"],
-    "description": "Generic fprintf() snippet"
-  },
-  "scanf": {
-    "prefix": "scanf",
-    "body": ["scanf(\"$1\"$0);"],
-    "description": "Generic scanf() snippet"
-  },
-  "sscanf": {
-    "prefix": "sscanf",
-    "body": ["sscanf($1, \"$2\"$0);"],
-    "description": "Generic sscanf() snippet"
-  },
-  "fscanf": {
-    "prefix": "fscanf",
-    "body": ["fscanf($1, \"$2\"$0);"],
-    "description": "Generic fscanf() snippet"
-  },
-  "#inc": {
-    "prefix": "#inc",
-    "body": ["#include \"$1\"$0"],
-    "description": "Code snippet for #include \" \""
-  },
-  "#inc<": {
-    "prefix": "#inc<",
-    "body": ["#include <$1>$0"],
-    "description": "Code snippet for #include < >"
-  },
-  "#def": {
-    "prefix": "def",
-    "body": ["#define $1"],
-    "description": "Code snippet for #define \" \""
-  },
-  "Main function template": {
-    "prefix": "main",
-    "body": [
-      "int main (int argc, char *argv[])",
-      "{",
-      "\t$1",
-      "\treturn 0;",
-      "}"
-    ],
-    "description": "A standard main function for a C++ program"
   }
 }
